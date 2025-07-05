@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import bride from "../assets/bride.jpg";
+import HeroSection from "../pages/HeroSection";
 
 const PinEntry = () => {
   const [pin, setPin] = useState(["", "", "", ""]);
@@ -34,23 +34,7 @@ const PinEntry = () => {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
       <div className="w-[320px] h-[700px] bg-white shadow-lg overflow-hidden">
-        <div className="relative">
-          <img
-            src={bride}
-            alt="bride"
-            className="w-full h-[400px] object-cover"
-          />
-          <div className="absolute top-4 left-4 flex items-center gap-2">
-            <div className="w-7 h-7 bg-black rounded-full" />
-            <span className="text-white text-base font-bold">
-              Photoshare AI
-            </span>
-          </div>
-          <div className="absolute bottom-4 left-0 w-full text-white text-center px-4">
-            <div className="text-lg font-semibold">Amit's wedding</div>
-            <div className="text-sm">25 May, 2025</div>
-          </div>
-        </div>
+        <HeroSection />
 
         <div className="p-6">
           <p className="text-left text-black font-medium text-base mb-6 mt-0">
@@ -73,10 +57,11 @@ const PinEntry = () => {
           <button
             onClick={handleLogin}
             disabled={!isComplete}
-            className={`w-full h-12 text-white text-lg font-semibold transition ${isComplete
+            className={`w-full h-12 text-white text-lg font-semibold transition ${
+              isComplete
                 ? "bg-black cursor-pointer"
                 : "bg-gray-400 text-gray-200 cursor-not-allowed"
-              }`}
+            }`}
           >
             Login
           </button>
@@ -87,3 +72,9 @@ const PinEntry = () => {
 };
 
 export default PinEntry;
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import bride from "../assets/bride.jpg";
 import { useNavigate } from "react-router-dom";
+import HeroSection from "../pages/HeroSection";
 
 const Details = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,16 +12,36 @@ const Details = () => {
     remember: false,
   });
 
-  const isFormComplete =
-    formData.name && formData.email && formData.phone;
+  const [touched, setTouched] = useState({});
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    const val = type === "checkbox" ? checked : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: val,
     }));
   };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
+
+  const isValid = {
+    name: formData.name.trim().length >= 2 && /^[A-Za-z\s]+$/.test(formData.name),
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
+    phone: /^\d{10}$/.test(formData.phone),
+  };
+
+  const errorText = {
+    name: "Enter at least 2 letters (no numbers)",
+    email: "Enter a valid email",
+    phone: "Enter a 10-digit number",
+  };
+
+  const isFormComplete = Object.values(isValid).every(Boolean);
 
   const handleSubmit = () => {
     if (isFormComplete) {
@@ -29,81 +50,82 @@ const Details = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-6 overflow-auto">
-      <div className="w-[320px] bg-white shadow-lg rounded-none">
-       
-        <div className="relative">
-          <img
-            src={bride}
-            alt="bride"
-            className="w-full h-[400px] object-cover"
-          />
-          <div className="absolute top-4 left-4 flex items-center gap-2">
-            <div className="w-7 h-7 bg-black rounded-full" />
-            <span className="text-white text-base font-bold">
-              Photoshare AI
-            </span>
-          </div>
-          <div className="absolute bottom-4 left-0 w-full text-white text-center px-4">
-            <div className="text-lg font-semibold">Amit's wedding</div>
-            <div className="text-sm">25 May, 2025</div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-black text-black px-4 py-4 flex items-start justify-center">
+      <div className="w-[320px] bg-white shadow-lg rounded-md">
+        <HeroSection />
 
         <div className="px-4 py-6 space-y-4">
-          <h2 className="text-black font-bold text-base">
-            Welcome to Amit's Wedding Photos!
-          </h2>
-          <p className="text-sm text-black leading-5">
-            With Photoshare AI, you can access all photos of events Or
-            limited photos Or you can search <strong>YOUR</strong> photo
-            from thousands of photos through our <strong>AI Technology</strong>
+          <h2 className="font-bold text-base">Welcome to Amit's Wedding Photos!</h2>
+          <p className="text-sm leading-5">
+            With Photoshare AI, you can access all photos of events Or limited photos Or you can search <strong>YOUR</strong> photo from thousands of photos through our <strong>AI Technology</strong>
           </p>
 
-          <p className="text-black font-semibold text-sm pt-4">
-            Enter your details and start!
-          </p>
+          <p className="font-semibold text-sm pt-4">Enter your details and start!</p>
 
           <div className="space-y-3">
+            {/* Full Name */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Full Name*
-              </label>
+              <label className="block text-sm font-medium mb-1">Full Name*</label>
               <input
                 name="name"
                 type="text"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onBlur={handleBlur}
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                }}
+                className={`w-full border ${
+                  touched.name && !isValid.name ? "border-red-400" : "border-gray-300"
+                } rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
+              {touched.name && !isValid.name && (
+                <p className="text-xs text-red-500 mt-1">{errorText.name}</p>
+              )}
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Email*
-              </label>
+              <label className="block text-sm font-medium mb-1">Email*</label>
               <input
                 name="email"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onBlur={handleBlur}
+                className={`w-full border ${
+                  touched.email && !isValid.email ? "border-red-400" : "border-gray-300"
+                } rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
+              {touched.email && !isValid.email && (
+                <p className="text-xs text-red-500 mt-1">{errorText.email}</p>
+              )}
             </div>
 
+            {/* Phone */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Phone Number
-              </label>
+              <label className="block text-sm font-medium mb-1">Phone Number*</label>
               <input
                 name="phone"
                 type="text"
+                inputMode="numeric"
+                maxLength={10}
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onBlur={handleBlur}
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/\D/g, "");
+                }}
+                className={`w-full border ${
+                  touched.phone && !isValid.phone ? "border-red-400" : "border-gray-300"
+                } rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
+              {touched.phone && !isValid.phone && (
+                <p className="text-xs text-red-500 mt-1">{errorText.phone}</p>
+              )}
             </div>
 
+            {/* Checkbox */}
             <div className="flex items-center gap-2">
               <input
                 name="remember"
@@ -116,6 +138,7 @@ const Details = () => {
             </div>
           </div>
 
+          {/* Button */}
           <button
             onClick={handleSubmit}
             disabled={!isFormComplete}
@@ -134,4 +157,11 @@ const Details = () => {
 };
 
 export default Details;
+
+
+
+
+
+
+
 

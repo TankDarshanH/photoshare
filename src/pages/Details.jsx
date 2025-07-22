@@ -63,7 +63,7 @@ const Details = () => {
           <p className="font-semibold text-sm pt-4">Enter your details and start!</p>
 
           <div className="space-y-3">
-            {/* Full Name */}
+          
             <div>
               <label className="block text-sm font-medium mb-1">Full Name*</label>
               <input
@@ -84,7 +84,7 @@ const Details = () => {
               )}
             </div>
 
-            {/* Email */}
+         
             <div>
               <label className="block text-sm font-medium mb-1">Email*</label>
               <input
@@ -102,7 +102,6 @@ const Details = () => {
               )}
             </div>
 
-            {/* Phone */}
             <div>
               <label className="block text-sm font-medium mb-1">Phone Number*</label>
               <input
@@ -125,7 +124,7 @@ const Details = () => {
               )}
             </div>
 
-            {/* Checkbox */}
+   
             <div className="flex items-center gap-2">
               <input
                 name="remember"
@@ -138,7 +137,6 @@ const Details = () => {
             </div>
           </div>
 
-          {/* Button */}
           <button
             onClick={handleSubmit}
             disabled={!isFormComplete}

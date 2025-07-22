@@ -4,7 +4,7 @@ import { TbHeart, TbHeartFilled, TbShare, TbFocusCentered } from "react-icons/tb
 import { SlOptionsVertical } from "react-icons/sl";
 import bride from "../assets/bride.jpg";
 
-// Removed "Selfies"
+
 const sessions = ["All", "Haldi", "Wedding", "Reception"];
 
 const AlbumGallery = () => {
@@ -124,10 +124,9 @@ const AlbumGallery = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black px-4 py-6 flex items-start justify-center relative">
+    <div className="min-h-screen bg-black text-black px-4 py-6 flex items-start justify-center relative">
       <div className="w-[320px] bg-white shadow-lg rounded-md relative z-10">
 
-        {/* Banner */}
         <div className="relative">
           <img src={bride} alt="Amit's Wedding" className="w-full h-[300px] object-cover" />
           <div className="absolute top-4 left-4 flex items-center gap-2">
@@ -140,7 +139,7 @@ const AlbumGallery = () => {
           </div>
         </div>
 
-        {/* Header & Filter */}
+      
         <div className="bg-white px-4 pt-4 pb-2 -mt-2 rounded-t-md shadow-2xl">
           <div className="flex justify-between items-start">
             <h2 className="text-xs font-bold text-gray-800">Amit's Wedding</h2>
@@ -180,7 +179,7 @@ const AlbumGallery = () => {
             </div>
           </div>
 
-          {/* Session Filter */}
+
           <div className="mt-4 flex items-center justify-between">
             <span className="text-base font-semibold text-gray-800">Sessions</span>
             <div className="relative">
@@ -198,7 +197,7 @@ const AlbumGallery = () => {
           </div>
         </div>
 
-        {/* Photo Grid */}
+ 
         <div className="px-3 pb-3 pt-4">
           {photos.length === 0 ? (
             <p className="text-sm text-center text-gray-500 py-10">Loading photos...</p>
@@ -242,7 +241,7 @@ const AlbumGallery = () => {
         <canvas ref={canvasRef} style={{ display: "none" }} />
       </div>
 
-      {/* Camera Modal */}
+
       {showCameraModal && (
         <div className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-[380px] relative overflow-hidden animate-fadeIn">
